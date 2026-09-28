@@ -1,0 +1,40 @@
+# Industrial Defect Segmentation Config - Real DeepCrack
+dataset:
+  name: "deepcrack_2019"
+  root: "./data"
+  img_size: 128  # 256 for full
+  num_classes: 2
+  train_samples: 300
+  test_samples: 237
+  crack_pixel_ratio: 0.03  # 2-5%
+
+model:
+  name: "unet"  # unet, deeplabv3plus, fpn
+  encoder: "resnet18"  # resnet18, resnet34, resnet50
+  pretrained: true
+  num_classes: 2
+
+training:
+  batch_size: 4
+  epochs: 3  # 15 for full
+  lr: 1.0e-4
+  optimizer: "adam"
+  scheduler: "ReduceLROnPlateau"
+  scheduler_patience: 3
+  scheduler_factor: 0.5
+  loss_dice_weight: 0.6  # Higher for imbalance
+  loss_ce_weight: 0.4
+  early_stopping_patience: 10
+
+augmentation:
+  hflip: 0.5
+  vflip: 0.3
+  rotate90: 0.3
+  brightness_contrast: 0.2
+  gauss_noise: 0.2
+
+deployment:
+  host: "0.0.0.0"
+  port: 8000
+  inference_size: 256
+  overlay_color: [255, 0, 0]  # Red for cracks
