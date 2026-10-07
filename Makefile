@@ -1,28 +1,41 @@
-.PHONY: install train eval inference docker clean
+.PHONY: install install-dev validate-data train evaluate dashboard serve benchmark test lint docker-build docker-run clean
 
 install:
+	@echo "Install the correct torch/torchvision build first; see README.md."
 	pip install -r requirements.txt
-	pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+
+install-dev:
+	pip install -r requirements-dev.txt
+
+validate-data:
+	python -m src.download_data --root data
 
 train:
-	python src/train.py --config config.yaml
+	python -m src.train --config config.yaml
 
-eval:
-	python src/evaluate.py --config config.yaml
+evaluate:
+	python -m src.evaluate --config config.yaml --checkpoint checkpoints/best.pt
 
-inference:
-	uvicorn src.inference:app --host 0.0.0.0 --port 8000 --reload
+dashboard:
+	python -m src.reporting
 
-docker-build:
-	docker build -t industrial-defect-pipeline .
+serve:
+	uvicorn src.inference:app --host 0.0.0.0 --port 8000
 
-docker-run:
-	docker run -p 8000:8000 industrial-defect-pipeline
+benchmark:
+	python -m src.benchmark --model unet --encoder resnet18
 
-clean:
-	find . -type d -name "__pycache__" -exec rm -rf {} +
-	find . -type f -name "*.pyc" -delete
-	rm -rf .pytest_cache
+test:
+	pytest
 
 lint:
-	python -m flake8 src/ --max-line-length=100
+	ruff check src tests
+
+docker-build:
+	docker build -t deepcrack-segmentation-pipeline .
+
+docker-run:
+	docker run --rm -p 8000:8000 -v "$(PWD)/checkpoints:/app/checkpoints:ro" deepcrack-segmentation-pipeline
+
+clean:
+	rm -rf .pytest_cache .ruff_cache **/__pycache__ reports/test_metrics.json reports/experiment_dashboard.png

@@ -1,2 +1,0 @@
-Model,mIoU,Dice,Pixel Acc,Params,Inference (ms)
-U-Net ResNet18 (Real DeepCrack),0.71997356,0.8055513,0.9650426228841146,14M,38

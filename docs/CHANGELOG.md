@@ -1,40 +1,19 @@
-# Changelog - Industrial Defect
+# Changelog
 
-## v2.0 - Expert Review Improvements (2026-09-28)
+## 2.0.0 — split integrity and reproducibility revision
 
-### Critical Fixes
-- LICENSE MIT
-- Dockerfile production
-- config.yaml with crack-specific params (dice_weight 0.6 for 2-5% imbalance)
-- Makefile
-- config.py, download_data.py, benchmark.py, test_model.py
-- .gitignore fixed for large models
+### Scientific validity
 
-### Code Quality
-- Type hints in models.py
-- Docstrings for thin crack handling
-- Argparse + yaml in train.py
-- Precision, Recall, F1, Confusion Matrix in evaluate.py
-- Count parameters utility
+- Reserved the official DeepCrack test set for final evaluation only.
+- Added deterministic train/validation derivation from official training data.
+- Persisted the split manifest and checkpoint protocol metadata.
+- Replaced silent empty masks with strict one-to-one image/mask validation.
+- Replaced per-batch averaged metrics with a global confusion-matrix metric accumulator.
+- Made foreground crack IoU the checkpoint selection metric and added foreground Dice, precision, and recall.
 
-### Documentation
-- models/README.md model card with imbalance handling
-- CHANGELOG
+### Engineering and presentation
 
-### Metrics
-- Real DeepCrack 537 images: 300 train / 237 test
-- mIoU 0.72, Dice 0.8056, PixelAcc 0.9650, Precision, Recall, F1
-- 10 real demo predictions with crack pixel count
-
-### Roadmap
-- Crack width measurement from mask
-- Severity classification
-- Multi-class crack types
-- ONNX export for factory edge
-- Add lighting/texture robustness tests
-
-## v1.0 - Initial Release
-- U-Net ResNet18 14M, DeepLabV3+ 42M, FPN
-- Real DeepCrack dataset
-- Dice 0.6 + CE 0.4 for imbalance
-- FastAPI /predict /predict_overlay
+- Added package-safe module entry points, test coverage, linting, CI, Docker fixes, and version-pinned CPU dependencies.
+- Added a report generator that creates a dashboard only from current experiment artifacts.
+- Made FastAPI checkpoint-safe and input-safe.
+- Removed stale dashboards, thumbnails, notebook, demo images, old history, and unsupported accuracy/latency claims.

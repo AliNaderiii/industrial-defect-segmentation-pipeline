@@ -1,137 +1,125 @@
-"""
-Inference & Web Deployment - FastAPI for Industrial Defect Segmentation
-Production API for crack detection
-"""
+"""Safe FastAPI inference for a locally trained DeepCrack checkpoint."""
+from __future__ import annotations
 
-import torch
-import numpy as np
-from PIL import Image
 import io
-import cv2
+import os
 from pathlib import Path
-import albumentations as A
-from albumentations.pytorch import ToTensorV2
+from typing import Any
 
-from models import get_model
+import cv2
+import numpy as np
+import torch
+from PIL import Image, UnidentifiedImageError
 
-class SegmentationInference:
-    def __init__(self, model_name='unet', encoder='resnet18', model_path=None, device=None):
-        if device is None:
-            self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-        else:
-            self.device = device
-        
-        self.model = get_model(model_name=model_name, num_classes=2, encoder=encoder)
-        
-        if model_path is None:
-            models_dir = Path(__file__).parent.parent / "models"
-            candidates = list(models_dir.glob(f"best_{model_name}*.pth"))
-            if candidates:
-                model_path = candidates[0]
-        
-        if model_path and Path(model_path).exists():
-            print(f"Loading model from {model_path}")
-            self.model.load_state_dict(torch.load(model_path, map_location=self.device))
-        else:
-            print(f"Model not found, using pretrained encoder only")
-        
-        self.model = self.model.to(self.device)
-        self.model.eval()
-        
-        self.transform = A.Compose([
-            A.Resize(256, 256),
-            A.Normalize(mean=(0.485, 0.456, 0.406), std=(0.229, 0.224, 0.225)),
-            ToTensorV2()
-        ])
-    
-    def predict(self, image):
+from .evaluate import load_checkpoint
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+DEFAULT_CHECKPOINT = PROJECT_ROOT / "checkpoints" / "best.pt"
+MAX_UPLOAD_BYTES = int(os.getenv("MAX_UPLOAD_BYTES", str(10 * 1024 * 1024)))
+
+
+class CrackInference:
+    """Perform original-size crack-mask inference from a valid local checkpoint."""
+
+    def __init__(self, checkpoint_path: str | Path = DEFAULT_CHECKPOINT) -> None:
+        self.checkpoint_path = Path(checkpoint_path)
+        if not self.checkpoint_path.is_file():
+            raise FileNotFoundError(
+                f"No trained checkpoint at {self.checkpoint_path}. "
+                "Train the model before requesting predictions."
+            )
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self.model, payload = load_checkpoint(self.checkpoint_path, self.device)
+        self.image_size = int(payload["dataset"]["image_size"])
+        self.model_name = payload["model"]["name"]
+        self.encoder = payload["model"]["encoder"]
+
+    def predict(self, image: Image.Image | np.ndarray) -> np.ndarray:
         if isinstance(image, Image.Image):
-            image_np = np.array(image)
+            rgb = np.asarray(image.convert("RGB"))
         else:
-            image_np = image
-        
-        transformed = self.transform(image=image_np)
-        img_tensor = transformed['image'].unsqueeze(0).to(self.device)
-        
-        with torch.no_grad():
-            output = self.model(img_tensor)
-            pred = torch.argmax(output, dim=1).squeeze(0).cpu().numpy()
-        
-        return pred
-    
-    def predict_with_overlay(self, image, alpha=0.5):
-        if isinstance(image, Image.Image):
-            image_np = np.array(image)
-        else:
-            image_np = image
-        
-        mask = self.predict(image_np)
-        mask_resized = cv2.resize(mask.astype(np.uint8), (image_np.shape[1], image_np.shape[0]), interpolation=cv2.INTER_NEAREST)
-        
-        colored_mask = np.zeros_like(image_np)
-        colored_mask[mask_resized == 1] = [255, 0, 0]  # Red for crack
-        
-        overlay = cv2.addWeighted(image_np, 1-alpha, colored_mask, alpha, 0)
-        
-        return image_np, mask_resized, overlay
+            rgb = np.asarray(image)
+            if rgb.ndim != 3 or rgb.shape[2] not in {3, 4}:
+                raise ValueError("Expected an RGB or RGBA image")
+            rgb = rgb[:, :, :3]
+        height, width = rgb.shape[:2]
+        resized = cv2.resize(rgb, (self.image_size, self.image_size), interpolation=cv2.INTER_LINEAR)
+        normalized = resized.astype(np.float32) / 255.0
+        normalized = (normalized - np.array([0.485, 0.456, 0.406], dtype=np.float32)) / np.array(
+            [0.229, 0.224, 0.225], dtype=np.float32
+        )
+        tensor = torch.from_numpy(normalized.transpose(2, 0, 1)).unsqueeze(0).to(self.device)
+        with torch.inference_mode():
+            labels = self.model(tensor).argmax(dim=1).squeeze(0).cpu().numpy().astype(np.uint8)
+        return cv2.resize(labels, (width, height), interpolation=cv2.INTER_NEAREST)
 
-# FastAPI App
+    def predict_overlay(self, image: Image.Image | np.ndarray, alpha: float = 0.45) -> np.ndarray:
+        if not 0 <= alpha <= 1:
+            raise ValueError("alpha must be in [0, 1]")
+        rgb = np.asarray(image.convert("RGB")) if isinstance(image, Image.Image) else np.asarray(image)[:, :, :3]
+        mask = self.predict(rgb)
+        red = np.zeros_like(rgb)
+        red[mask == 1] = (255, 0, 0)
+        return cv2.addWeighted(rgb, 1 - alpha, red, alpha, 0)
+
+
 try:
-    from fastapi import FastAPI, File, UploadFile
+    from fastapi import FastAPI, File, HTTPException, UploadFile
     from fastapi.responses import StreamingResponse
-    import uvicorn
-    
-    app = FastAPI(title="Industrial Defect Segmentation API", description="U-Net for crack detection", version="1.0")
-    
-    inference_model = None
-    
-    @app.on_event("startup")
-    def load_model():
-        global inference_model
-        inference_model = SegmentationInference(model_name='unet', encoder='resnet18')
-    
-    @app.get("/")
-    def root():
-        return {"message": "Industrial Defect Segmentation API - U-Net DeepCrack", "models": ["unet", "deeplabv3plus", "fpn"], "status": "ready"}
-    
-    @app.post("/predict")
-    async def predict(file: UploadFile = File(...)):
-        image = Image.open(io.BytesIO(await file.read())).convert('RGB')
-        mask = inference_model.predict(image)
-        mask_img = Image.fromarray((mask * 255).astype(np.uint8))
-        img_byte_arr = io.BytesIO()
-        mask_img.save(img_byte_arr, format='PNG')
-        img_byte_arr.seek(0)
-        return StreamingResponse(img_byte_arr, media_type="image/png")
-    
-    @app.post("/predict_overlay")
-    async def predict_overlay(file: UploadFile = File(...)):
-        image = Image.open(io.BytesIO(await file.read())).convert('RGB')
-        original, mask, overlay = inference_model.predict_with_overlay(image)
-        overlay_img = Image.fromarray(overlay.astype(np.uint8))
-        img_byte_arr = io.BytesIO()
-        overlay_img.save(img_byte_arr, format='PNG')
-        img_byte_arr.seek(0)
-        return StreamingResponse(img_byte_arr, media_type="image/png")
-    
-    if __name__ == "__main__":
-        uvicorn.run(app, host="0.0.0.0", port=8000)
 
-except ImportError:
-    print("FastAPI not installed")
+    app = FastAPI(
+        title="DeepCrack Segmentation Reference API",
+        description="Serves a local, trained binary crack-segmentation checkpoint only.",
+        version="2.0.0",
+    )
+    _engine: CrackInference | None = None
+    _load_error: str | None = None
+
+    def get_engine() -> CrackInference:
+        global _engine, _load_error
+        if _engine is None and _load_error is None:
+            try:
+                _engine = CrackInference(Path(os.getenv("CHECKPOINT_PATH", str(DEFAULT_CHECKPOINT))))
+            except (FileNotFoundError, RuntimeError, ValueError) as error:
+                _load_error = str(error)
+        if _engine is None:
+            raise HTTPException(status_code=503, detail={"message": "Model unavailable", "reason": _load_error})
+        return _engine
+
+    async def read_image(file: UploadFile) -> Image.Image:
+        if file.content_type and not file.content_type.startswith("image/"):
+            raise HTTPException(status_code=415, detail="Upload an image file.")
+        raw = await file.read(MAX_UPLOAD_BYTES + 1)
+        if len(raw) > MAX_UPLOAD_BYTES:
+            raise HTTPException(status_code=413, detail=f"Image exceeds {MAX_UPLOAD_BYTES} bytes.")
+        try:
+            return Image.open(io.BytesIO(raw)).convert("RGB")
+        except (UnidentifiedImageError, OSError, ValueError) as error:
+            raise HTTPException(status_code=422, detail="The upload is not a readable image.") from error
+
+    @app.get("/health")
+    def health() -> dict[str, Any]:
+        checkpoint = Path(os.getenv("CHECKPOINT_PATH", str(DEFAULT_CHECKPOINT)))
+        return {
+            "status": "checkpoint_present" if checkpoint.is_file() else "model_not_loaded",
+            "checkpoint": str(checkpoint),
+            "prediction_endpoint": "/predict",
+        }
+
+    @app.post("/predict", response_class=StreamingResponse)
+    async def predict(file: UploadFile = File(...)) -> StreamingResponse:
+        mask = get_engine().predict(await read_image(file))
+        buffer = io.BytesIO()
+        Image.fromarray(mask).save(buffer, format="PNG")
+        buffer.seek(0)
+        return StreamingResponse(buffer, media_type="image/png")
+
+    @app.post("/predict-overlay", response_class=StreamingResponse)
+    async def predict_overlay(file: UploadFile = File(...)) -> StreamingResponse:
+        overlay = get_engine().predict_overlay(await read_image(file))
+        buffer = io.BytesIO()
+        Image.fromarray(overlay).save(buffer, format="PNG")
+        buffer.seek(0)
+        return StreamingResponse(buffer, media_type="image/png")
+except ImportError:  # pragma: no cover
     app = None
-
-if __name__ == "__main__":
-    from data_loader import get_dataloaders
-    train_loader, val_loader = get_dataloaders(batch_size=2, img_size=256, root='../data')
-    inference = SegmentationInference(model_name='unet', encoder='resnet18')
-    for images, masks in val_loader:
-        img_tensor = images[0]
-        mean = torch.tensor([0.485, 0.456, 0.406]).view(3, 1, 1)
-        std = torch.tensor([0.229, 0.224, 0.225]).view(3, 1, 1)
-        img_denorm = img_tensor * std + mean
-        img_denorm = torch.clamp(img_denorm, 0, 1)
-        img_np = (img_denorm.permute(1, 2, 0).numpy() * 255).astype(np.uint8)
-        pred_mask = inference.predict(img_np)
-        print(f"Predicted mask shape: {pred_mask.shape}, unique: {np.unique(pred_mask)}")
-        break

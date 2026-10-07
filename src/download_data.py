@@ -1,27 +1,25 @@
-"""Download DeepCrack dataset"""
-from pathlib import Path
-import os
+"""Validate a manually obtained DeepCrack dataset without downloading unknown files."""
+from __future__ import annotations
 
-def download_deepcrack(root="./data"):
-    """
-    DeepCrack dataset - 537 real crack images
-    Manual download from https://github.com/yhlleo/DeepCrack
-    Place DeepCrack.zip in data/ and unzip, or use this script to guide
-    """
-    root_path = Path(root)
-    root_path.mkdir(parents=True, exist_ok=True)
-    print(f"DeepCrack dataset should be in {root_path}")
-    print("1. Download DeepCrack.zip from https://github.com/yhlleo/DeepCrack")
-    print("2. Unzip to data/train_img, data/train_lab, data/test_img, data/test_lab")
-    print("3. Expected: 300 train + 237 test = 537 images")
-    
-    # Check if exists
-    train_img = root_path / "train_img"
-    if train_img.exists():
-        count = len(list(train_img.glob("*.jpg")) + list(train_img.glob("*.png")))
-        print(f"Found {count} train images")
-    else:
-        print("Not found, please download manually")
+import argparse
+from pathlib import Path
+
+from .config import PROJECT_ROOT
+from .data_loader import discover_records
+
+
+def validate_deepcrack(root: str | Path) -> None:
+    root = Path(root)
+    print("DeepCrack must be obtained under its own non-commercial research terms.")
+    print("Expected directories: train_img/, train_lab/, test_img/, test_lab/.")
+    train = discover_records(root, "train")
+    test = discover_records(root, "test")
+    print(f"Validated {len(train)} labelled train pair(s) and {len(test)} labelled official test pair(s).")
+    print("The pipeline derives validation only from train; test remains held out until evaluation.")
+
 
 if __name__ == "__main__":
-    download_deepcrack()
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--root", default=str(PROJECT_ROOT / "data"))
+    args = parser.parse_args()
+    validate_deepcrack(args.root)
