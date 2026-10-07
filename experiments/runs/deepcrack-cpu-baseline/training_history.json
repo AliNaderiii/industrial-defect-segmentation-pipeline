@@ -1,0 +1,1031 @@
+{
+  "protocol": "test split was not loaded for model selection or scheduler decisions",
+  "best_validation_foreground_iou": 0.595122,
+  "environment": {
+    "python": "3.11.9",
+    "torch": "2.6.0+cpu",
+    "device": "cpu"
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "learning_rate": 0.0001,
+      "train_loss": 0.8121710360050202,
+      "validation_loss": 0.7441276033719381,
+      "train": {
+        "pixel_accuracy": 0.7394259134928386,
+        "mean_iou": 0.4098296168888349,
+        "mean_dice": 0.5028152465439404,
+        "foreground_iou": 0.086856,
+        "foreground_dice": 0.15983,
+        "foreground_precision": 0.088369,
+        "foreground_recall": 0.835282,
+        "per_class_iou": [
+          0.732803,
+          0.086856
+        ],
+        "per_class_dice": [
+          0.845801,
+          0.15983
+        ],
+        "support": [
+          3815482,
+          116678
+        ],
+        "confusion_matrix": [
+          [
+            2810082,
+            1005400
+          ],
+          [
+            19219,
+            97459
+          ]
+        ]
+      },
+      "validation": {
+        "pixel_accuracy": 0.9058756510416667,
+        "mean_iou": 0.5417655915224733,
+        "mean_dice": 0.6270420123195827,
+        "foreground_iou": 0.179636,
+        "foreground_dice": 0.304562,
+        "foreground_precision": 0.190059,
+        "foreground_recall": 0.766127,
+        "per_class_iou": [
+          0.903895,
+          0.179636
+        ],
+        "per_class_dice": [
+          0.949522,
+          0.304562
+        ],
+        "support": [
+          956594,
+          26446
+        ],
+        "confusion_matrix": [
+          [
+            870251,
+            86343
+          ],
+          [
+            6185,
+            20261
+          ]
+        ]
+      }
+    },
+    {
+      "epoch": 2,
+      "learning_rate": 0.0001,
+      "train_loss": 0.6682073533535003,
+      "validation_loss": 0.6485577166080475,
+      "train": {
+        "pixel_accuracy": 0.9500083923339844,
+        "mean_iou": 0.6412496083019017,
+        "mean_dice": 0.7370921272724351,
+        "foreground_iou": 0.333775,
+        "foreground_dice": 0.500497,
+        "foreground_precision": 0.35571,
+        "foreground_recall": 0.844058,
+        "per_class_iou": [
+          0.948724,
+          0.333775
+        ],
+        "per_class_dice": [
+          0.973687,
+          0.500497
+        ],
+        "support": [
+          3815482,
+          116678
+        ],
+        "confusion_matrix": [
+          [
+            3637102,
+            178380
+          ],
+          [
+            18195,
+            98483
+          ]
+        ]
+      },
+      "validation": {
+        "pixel_accuracy": 0.9622568766276042,
+        "mean_iou": 0.6584791111321464,
+        "mean_dice": 0.7524411593439431,
+        "foreground_iou": 0.355504,
+        "foreground_dice": 0.524534,
+        "foreground_precision": 0.396712,
+        "foreground_recall": 0.773879,
+        "per_class_iou": [
+          0.961454,
+          0.355504
+        ],
+        "per_class_dice": [
+          0.980348,
+          0.524534
+        ],
+        "support": [
+          956594,
+          26446
+        ],
+        "confusion_matrix": [
+          [
+            925471,
+            31123
+          ],
+          [
+            5980,
+            20466
+          ]
+        ]
+      }
+    },
+    {
+      "epoch": 3,
+      "learning_rate": 0.0001,
+      "train_loss": 0.5635184620817503,
+      "validation_loss": 0.5610551098982494,
+      "train": {
+        "pixel_accuracy": 0.9683158874511719,
+        "mean_iou": 0.7033291541295346,
+        "mean_dice": 0.7968879868884331,
+        "foreground_iou": 0.439148,
+        "foreground_dice": 0.610289,
+        "foreground_precision": 0.480521,
+        "foreground_recall": 0.836079,
+        "per_class_iou": [
+          0.96751,
+          0.439148
+        ],
+        "per_class_dice": [
+          0.983487,
+          0.610289
+        ],
+        "support": [
+          3815482,
+          116678
+        ],
+        "confusion_matrix": [
+          [
+            3710021,
+            105461
+          ],
+          [
+            19126,
+            97552
+          ]
+        ]
+      },
+      "validation": {
+        "pixel_accuracy": 0.9693206787109375,
+        "mean_iou": 0.6872575259425671,
+        "mean_dice": 0.7807283980502785,
+        "foreground_iou": 0.405851,
+        "foreground_dice": 0.577374,
+        "foreground_precision": 0.458666,
+        "foreground_recall": 0.778984,
+        "per_class_iou": [
+          0.968664,
+          0.405851
+        ],
+        "per_class_dice": [
+          0.984083,
+          0.577374
+        ],
+        "support": [
+          956594,
+          26446
+        ],
+        "confusion_matrix": [
+          [
+            932280,
+            24314
+          ],
+          [
+            5845,
+            20601
+          ]
+        ]
+      }
+    },
+    {
+      "epoch": 4,
+      "learning_rate": 0.0001,
+      "train_loss": 0.47942126741011937,
+      "validation_loss": 0.4959971288839976,
+      "train": {
+        "pixel_accuracy": 0.9738538106282552,
+        "mean_iou": 0.7282838787973736,
+        "mean_dice": 0.8190677058979249,
+        "foreground_iou": 0.48337,
+        "foreground_dice": 0.651718,
+        "foreground_precision": 0.538839,
+        "foreground_recall": 0.824423,
+        "per_class_iou": [
+          0.973198,
+          0.48337
+        ],
+        "per_class_dice": [
+          0.986417,
+          0.651718
+        ],
+        "support": [
+          3815482,
+          116678
+        ],
+        "confusion_matrix": [
+          [
+            3733157,
+            82325
+          ],
+          [
+            20486,
+            96192
+          ]
+        ]
+      },
+      "validation": {
+        "pixel_accuracy": 0.9771514892578125,
+        "mean_iou": 0.7271211662773371,
+        "mean_dice": 0.8173140420040982,
+        "foreground_iou": 0.477578,
+        "foreground_dice": 0.646434,
+        "foreground_precision": 0.553734,
+        "foreground_recall": 0.776412,
+        "per_class_iou": [
+          0.976664,
+          0.477578
+        ],
+        "per_class_dice": [
+          0.988194,
+          0.646434
+        ],
+        "support": [
+          956594,
+          26446
+        ],
+        "confusion_matrix": [
+          [
+            940046,
+            16548
+          ],
+          [
+            5913,
+            20533
+          ]
+        ]
+      }
+    },
+    {
+      "epoch": 5,
+      "learning_rate": 0.0001,
+      "train_loss": 0.41633475571870804,
+      "validation_loss": 0.4404912640651067,
+      "train": {
+        "pixel_accuracy": 0.97703857421875,
+        "mean_iou": 0.7463702973897616,
+        "mean_dice": 0.8345360608321519,
+        "foreground_iou": 0.516279,
+        "foreground_dice": 0.680981,
+        "foreground_precision": 0.579325,
+        "foreground_recall": 0.825905,
+        "per_class_iou": [
+          0.976462,
+          0.516279
+        ],
+        "per_class_dice": [
+          0.988091,
+          0.680981
+        ],
+        "support": [
+          3815482,
+          116678
+        ],
+        "confusion_matrix": [
+          [
+            3745507,
+            69975
+          ],
+          [
+            20313,
+            96365
+          ]
+        ]
+      },
+      "validation": {
+        "pixel_accuracy": 0.9747406005859375,
+        "mean_iou": 0.7187267909725998,
+        "mean_dice": 0.8100618777649671,
+        "foreground_iou": 0.463276,
+        "foreground_dice": 0.633204,
+        "foreground_precision": 0.519575,
+        "foreground_recall": 0.810444,
+        "per_class_iou": [
+          0.974178,
+          0.463276
+        ],
+        "per_class_dice": [
+          0.98692,
+          0.633204
+        ],
+        "support": [
+          956594,
+          26446
+        ],
+        "confusion_matrix": [
+          [
+            936776,
+            19818
+          ],
+          [
+            5013,
+            21433
+          ]
+        ]
+      }
+    },
+    {
+      "epoch": 6,
+      "learning_rate": 0.0001,
+      "train_loss": 0.3711034153898557,
+      "validation_loss": 0.4078950434923172,
+      "train": {
+        "pixel_accuracy": 0.9796053568522135,
+        "mean_iou": 0.7592507176763877,
+        "mean_dice": 0.8451156281696078,
+        "foreground_iou": 0.539395,
+        "foreground_dice": 0.700788,
+        "foreground_precision": 0.620531,
+        "foreground_recall": 0.80489,
+        "per_class_iou": [
+          0.979106,
+          0.539395
+        ],
+        "per_class_dice": [
+          0.989443,
+          0.700788
+        ],
+        "support": [
+          3815482,
+          116678
+        ],
+        "confusion_matrix": [
+          [
+            3758052,
+            57430
+          ],
+          [
+            22765,
+            93913
+          ]
+        ]
+      },
+      "validation": {
+        "pixel_accuracy": 0.9773396809895833,
+        "mean_iou": 0.732303337104635,
+        "mean_dice": 0.821993772261042,
+        "foreground_iou": 0.487767,
+        "foreground_dice": 0.655703,
+        "foreground_precision": 0.554504,
+        "foreground_recall": 0.802087,
+        "per_class_iou": [
+          0.97684,
+          0.487767
+        ],
+        "per_class_dice": [
+          0.988284,
+          0.655703
+        ],
+        "support": [
+          956594,
+          26446
+        ],
+        "confusion_matrix": [
+          [
+            939552,
+            17042
+          ],
+          [
+            5234,
+            21212
+          ]
+        ]
+      }
+    },
+    {
+      "epoch": 7,
+      "learning_rate": 0.0001,
+      "train_loss": 0.33889572123686473,
+      "validation_loss": 0.37890089154243467,
+      "train": {
+        "pixel_accuracy": 0.9808738708496094,
+        "mean_iou": 0.7699951914707345,
+        "mean_dice": 0.8538578945450721,
+        "foreground_iou": 0.559593,
+        "foreground_dice": 0.717614,
+        "foreground_precision": 0.638561,
+        "foreground_recall": 0.819006,
+        "per_class_iou": [
+          0.980397,
+          0.559593
+        ],
+        "per_class_dice": [
+          0.990102,
+          0.717614
+        ],
+        "support": [
+          3815482,
+          116678
+        ],
+        "confusion_matrix": [
+          [
+            3761393,
+            54089
+          ],
+          [
+            21118,
+            95560
+          ]
+        ]
+      },
+      "validation": {
+        "pixel_accuracy": 0.9808634440104167,
+        "mean_iou": 0.7543704997796499,
+        "mean_dice": 0.84073958836249,
+        "foreground_iou": 0.528297,
+        "foreground_dice": 0.691354,
+        "foreground_precision": 0.610625,
+        "foreground_recall": 0.79668,
+        "per_class_iou": [
+          0.980444,
+          0.528297
+        ],
+        "per_class_dice": [
+          0.990126,
+          0.691354
+        ],
+        "support": [
+          956594,
+          26446
+        ],
+        "confusion_matrix": [
+          [
+            943159,
+            13435
+          ],
+          [
+            5377,
+            21069
+          ]
+        ]
+      }
+    },
+    {
+      "epoch": 8,
+      "learning_rate": 0.0001,
+      "train_loss": 0.31764161040385563,
+      "validation_loss": 0.3608720084031423,
+      "train": {
+        "pixel_accuracy": 0.9816876729329427,
+        "mean_iou": 0.775384955684274,
+        "mean_dice": 0.8581332082618776,
+        "foreground_iou": 0.569537,
+        "foreground_dice": 0.725739,
+        "foreground_precision": 0.653118,
+        "foreground_recall": 0.816529,
+        "per_class_iou": [
+          0.981233,
+          0.569537
+        ],
+        "per_class_dice": [
+          0.990528,
+          0.725739
+        ],
+        "support": [
+          3815482,
+          116678
+        ],
+        "confusion_matrix": [
+          [
+            3764882,
+            50600
+          ],
+          [
+            21407,
+            95271
+          ]
+        ]
+      },
+      "validation": {
+        "pixel_accuracy": 0.9800577799479167,
+        "mean_iou": 0.751811573953505,
+        "mean_dice": 0.8386876541098587,
+        "foreground_iou": 0.524013,
+        "foreground_dice": 0.687675,
+        "foreground_precision": 0.594185,
+        "foreground_recall": 0.816078,
+        "per_class_iou": [
+          0.97961,
+          0.524013
+        ],
+        "per_class_dice": [
+          0.9897,
+          0.687675
+        ],
+        "support": [
+          956594,
+          26446
+        ],
+        "confusion_matrix": [
+          [
+            941854,
+            14740
+          ],
+          [
+            4864,
+            21582
+          ]
+        ]
+      }
+    },
+    {
+      "epoch": 9,
+      "learning_rate": 0.0001,
+      "train_loss": 0.30433634171883267,
+      "validation_loss": 0.34638174424568813,
+      "train": {
+        "pixel_accuracy": 0.9823618570963542,
+        "mean_iou": 0.7791137762487972,
+        "mean_dice": 0.8610435721352676,
+        "foreground_iou": 0.576299,
+        "foreground_dice": 0.731205,
+        "foreground_precision": 0.667395,
+        "foreground_recall": 0.808507,
+        "per_class_iou": [
+          0.981928,
+          0.576299
+        ],
+        "per_class_dice": [
+          0.990882,
+          0.731205
+        ],
+        "support": [
+          3815482,
+          116678
+        ],
+        "confusion_matrix": [
+          [
+            3768469,
+            47013
+          ],
+          [
+            22343,
+            94335
+          ]
+        ]
+      },
+      "validation": {
+        "pixel_accuracy": 0.9847819010416666,
+        "mean_iou": 0.7799237410727619,
+        "mean_dice": 0.8613198883201961,
+        "foreground_iou": 0.575386,
+        "foreground_dice": 0.73047,
+        "foreground_precision": 0.697639,
+        "foreground_recall": 0.766543,
+        "per_class_iou": [
+          0.984461,
+          0.575386
+        ],
+        "per_class_dice": [
+          0.99217,
+          0.73047
+        ],
+        "support": [
+          956594,
+          26446
+        ],
+        "confusion_matrix": [
+          [
+            947808,
+            8786
+          ],
+          [
+            6174,
+            20272
+          ]
+        ]
+      }
+    },
+    {
+      "epoch": 10,
+      "learning_rate": 0.0001,
+      "train_loss": 0.2933668792247772,
+      "validation_loss": 0.32911159793535866,
+      "train": {
+        "pixel_accuracy": 0.982928212483724,
+        "mean_iou": 0.7851367044514731,
+        "mean_dice": 0.8657732653912783,
+        "foreground_iou": 0.587771,
+        "foreground_dice": 0.740373,
+        "foreground_precision": 0.674615,
+        "foreground_recall": 0.820335,
+        "per_class_iou": [
+          0.982502,
+          0.587771
+        ],
+        "per_class_dice": [
+          0.991174,
+          0.740373
+        ],
+        "support": [
+          3815482,
+          116678
+        ],
+        "confusion_matrix": [
+          [
+            3769316,
+            46166
+          ],
+          [
+            20963,
+            95715
+          ]
+        ]
+      },
+      "validation": {
+        "pixel_accuracy": 0.9834788004557292,
+        "mean_iou": 0.7750620227644854,
+        "mean_dice": 0.8575846346282614,
+        "foreground_iou": 0.567011,
+        "foreground_dice": 0.723684,
+        "foreground_precision": 0.657821,
+        "foreground_recall": 0.804205,
+        "per_class_iou": [
+          0.983113,
+          0.567011
+        ],
+        "per_class_dice": [
+          0.991485,
+          0.723684
+        ],
+        "support": [
+          956594,
+          26446
+        ],
+        "confusion_matrix": [
+          [
+            945531,
+            11063
+          ],
+          [
+            5178,
+            21268
+          ]
+        ]
+      }
+    },
+    {
+      "epoch": 11,
+      "learning_rate": 0.0001,
+      "train_loss": 0.2881765904525916,
+      "validation_loss": 0.33571094075838726,
+      "train": {
+        "pixel_accuracy": 0.9833422342936198,
+        "mean_iou": 0.786008829139869,
+        "mean_dice": 0.8664031906901328,
+        "foreground_iou": 0.589083,
+        "foreground_dice": 0.741412,
+        "foreground_precision": 0.68729,
+        "foreground_recall": 0.804788,
+        "per_class_iou": [
+          0.982935,
+          0.589083
+        ],
+        "per_class_dice": [
+          0.991394,
+          0.741412
+        ],
+        "support": [
+          3815482,
+          116678
+        ],
+        "confusion_matrix": [
+          [
+            3772758,
+            42724
+          ],
+          [
+            22777,
+            93901
+          ]
+        ]
+      },
+      "validation": {
+        "pixel_accuracy": 0.98497314453125,
+        "mean_iou": 0.7823009443930378,
+        "mean_dice": 0.863201452938961,
+        "foreground_iou": 0.579947,
+        "foreground_dice": 0.734135,
+        "foreground_precision": 0.700474,
+        "foreground_recall": 0.771194,
+        "per_class_iou": [
+          0.984655,
+          0.579947
+        ],
+        "per_class_dice": [
+          0.992268,
+          0.734135
+        ],
+        "support": [
+          956594,
+          26446
+        ],
+        "confusion_matrix": [
+          [
+            947873,
+            8721
+          ],
+          [
+            6051,
+            20395
+          ]
+        ]
+      }
+    },
+    {
+      "epoch": 12,
+      "learning_rate": 0.0001,
+      "train_loss": 0.28161562730868656,
+      "validation_loss": 0.30959334870179495,
+      "train": {
+        "pixel_accuracy": 0.9833045959472656,
+        "mean_iou": 0.7881256753126019,
+        "mean_dice": 0.8680818832232459,
+        "foreground_iou": 0.593364,
+        "foreground_dice": 0.744794,
+        "foreground_precision": 0.681519,
+        "foreground_recall": 0.82102,
+        "per_class_iou": [
+          0.982888,
+          0.593364
+        ],
+        "per_class_dice": [
+          0.99137,
+          0.744794
+        ],
+        "support": [
+          3815482,
+          116678
+        ],
+        "confusion_matrix": [
+          [
+            3770716,
+            44766
+          ],
+          [
+            20883,
+            95795
+          ]
+        ]
+      },
+      "validation": {
+        "pixel_accuracy": 0.98487548828125,
+        "mean_iou": 0.7867294505980638,
+        "mean_dice": 0.8667460753289544,
+        "foreground_iou": 0.588918,
+        "foreground_dice": 0.741282,
+        "foreground_precision": 0.68661,
+        "foreground_recall": 0.805415,
+        "per_class_iou": [
+          0.984541,
+          0.588918
+        ],
+        "per_class_dice": [
+          0.99221,
+          0.741282
+        ],
+        "support": [
+          956594,
+          26446
+        ],
+        "confusion_matrix": [
+          [
+            946872,
+            9722
+          ],
+          [
+            5146,
+            21300
+          ]
+        ]
+      }
+    },
+    {
+      "epoch": 13,
+      "learning_rate": 0.0001,
+      "train_loss": 0.27315519203742344,
+      "validation_loss": 0.31571732213099796,
+      "train": {
+        "pixel_accuracy": 0.9842264811197917,
+        "mean_iou": 0.7956895166891581,
+        "mean_dice": 0.8738593211854326,
+        "foreground_iou": 0.607547,
+        "foreground_dice": 0.755869,
+        "foreground_precision": 0.698913,
+        "foreground_recall": 0.822931,
+        "per_class_iou": [
+          0.983832,
+          0.607547
+        ],
+        "per_class_dice": [
+          0.99185,
+          0.755869
+        ],
+        "support": [
+          3815482,
+          116678
+        ],
+        "confusion_matrix": [
+          [
+            3774118,
+            41364
+          ],
+          [
+            20660,
+            96018
+          ]
+        ]
+      },
+      "validation": {
+        "pixel_accuracy": 0.9843170166015625,
+        "mean_iou": 0.7829281332646386,
+        "mean_dice": 0.8638038467927727,
+        "foreground_iou": 0.581889,
+        "foreground_dice": 0.735689,
+        "foreground_precision": 0.672961,
+        "foreground_recall": 0.811314,
+        "per_class_iou": [
+          0.983967,
+          0.581889
+        ],
+        "per_class_dice": [
+          0.991919,
+          0.735689
+        ],
+        "support": [
+          956594,
+          26446
+        ],
+        "confusion_matrix": [
+          [
+            946167,
+            10427
+          ],
+          [
+            4990,
+            21456
+          ]
+        ]
+      }
+    },
+    {
+      "epoch": 14,
+      "learning_rate": 0.0001,
+      "train_loss": 0.273189727216959,
+      "validation_loss": 0.2967155287663142,
+      "train": {
+        "pixel_accuracy": 0.9839950561523437,
+        "mean_iou": 0.7934606024686413,
+        "mean_dice": 0.8721613362429892,
+        "foreground_iou": 0.603325,
+        "foreground_dice": 0.752593,
+        "foreground_precision": 0.695155,
+        "foreground_recall": 0.820377,
+        "per_class_iou": [
+          0.983596,
+          0.603325
+        ],
+        "per_class_dice": [
+          0.99173,
+          0.752593
+        ],
+        "support": [
+          3815482,
+          116678
+        ],
+        "confusion_matrix": [
+          [
+            3773506,
+            41976
+          ],
+          [
+            20958,
+            95720
+          ]
+        ]
+      },
+      "validation": {
+        "pixel_accuracy": 0.9843454996744792,
+        "mean_iou": 0.7895495048570008,
+        "mean_dice": 0.8690506342968332,
+        "foreground_iou": 0.595122,
+        "foreground_dice": 0.746178,
+        "foreground_precision": 0.661732,
+        "foreground_recall": 0.855328,
+        "per_class_iou": [
+          0.983977,
+          0.595122
+        ],
+        "per_class_dice": [
+          0.991924,
+          0.746178
+        ],
+        "support": [
+          956594,
+          26446
+        ],
+        "confusion_matrix": [
+          [
+            945031,
+            11563
+          ],
+          [
+            3826,
+            22620
+          ]
+        ]
+      }
+    },
+    {
+      "epoch": 15,
+      "learning_rate": 0.0001,
+      "train_loss": 0.26810565739870074,
+      "validation_loss": 0.30181086709101995,
+      "train": {
+        "pixel_accuracy": 0.9843048095703125,
+        "mean_iou": 0.7951945470420657,
+        "mean_dice": 0.873464796816251,
+        "foreground_iou": 0.606473,
+        "foreground_dice": 0.755037,
+        "foreground_precision": 0.703169,
+        "foreground_recall": 0.815167,
+        "per_class_iou": [
+          0.983916,
+          0.606473
+        ],
+        "per_class_dice": [
+          0.991893,
+          0.755037
+        ],
+        "support": [
+          3815482,
+          116678
+        ],
+        "confusion_matrix": [
+          [
+            3775332,
+            40150
+          ],
+          [
+            21566,
+            95112
+          ]
+        ]
+      },
+      "validation": {
+        "pixel_accuracy": 0.9838368733723958,
+        "mean_iou": 0.7878412879544072,
+        "mean_dice": 0.8677792604798527,
+        "foreground_iou": 0.592234,
+        "foreground_dice": 0.743903,
+        "foreground_precision": 0.648285,
+        "foreground_recall": 0.872608,
+        "per_class_iou": [
+          0.983448,
+          0.592234
+        ],
+        "per_class_dice": [
+          0.991655,
+          0.743903
+        ],
+        "support": [
+          956594,
+          26446
+        ],
+        "confusion_matrix": [
+          [
+            944074,
+            12520
+          ],
+          [
+            3369,
+            23077
+          ]
+        ]
+      }
+    }
+  ]
+}

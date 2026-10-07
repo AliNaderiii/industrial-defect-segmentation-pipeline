@@ -5,7 +5,7 @@
 
 A reproducible PyTorch reference pipeline for **binary concrete-crack segmentation** using the DeepCrack dataset and U-Net, DeepLabV3+, or FPN models from `segmentation-models-pytorch`.
 
-> **Protocol first.** The official DeepCrack `test_*` folders are held out for one final evaluation only. Model selection, early stopping, and scheduler decisions use a deterministic validation split drawn exclusively from the official `train_*` folders. No checkpoint, dashboard, or headline score is committed to this repository; reproduce a logged run before publishing a result.
+> **Protocol first.** The official DeepCrack `test_*` folders are held out for one final evaluation only. Model selection, early stopping, and scheduler decisions use a deterministic validation split drawn exclusively from the official `train_*` folders. Raw data and model weights are never committed. Published scores appear only with their recorded configuration, split provenance, code commit, environment metadata, and artifact hashes.
 
 ## Why this revision exists
 
@@ -39,7 +39,19 @@ These are genuine visuals retained from the pre-v2 repository. They remain usefu
 
 </details>
 
-A current, reportable dashboard is generated after a recorded v2 run from the split manifest, checkpoint, training history, and held-out test evaluation.
+## Recorded v2 experiment
+
+The following is the first reportable v2 run. Unlike the archived gallery above, it was generated after a real recorded run using the current split-integrity protocol.
+
+![Recorded DeepCrack CPU baseline dashboard](assets/experiments/deepcrack_cpu_baseline_dashboard.png)
+
+| Official held-out DeepCrack test metric | Result |
+| --- | ---: |
+| Foreground / crack IoU | **0.665591** |
+| Foreground / crack Dice | **0.799225** |
+| Precision / recall | 0.778466 / 0.821121 |
+
+This single CPU run used U-Net with a pretrained ResNet-18 encoder at 128 × 128, seed 42, and a deterministic 240/60 train/validation split derived only from the 300 official training images. `best.pt` was selected at epoch 14 using validation crack IoU (0.595122); the 237-image official test set was evaluated only after selection. See the complete [experiment record](docs/experiments/deepcrack-cpu-baseline.md) and its versioned evidence bundle. These values are not a deployment or safety claim, and they should not be compared directly with runs using different protocol or resolution.
 
 ## Data card
 
@@ -112,7 +124,7 @@ checkpoints/
 └── training_history.json
 ```
 
-Evaluation writes `reports/test_metrics.json`; reporting writes `reports/experiment_dashboard.png`. These are ignored by Git because results are meaningful only with the matching checkpoint, split manifest, configuration, commit SHA, dataset provenance, seed, hardware, and dependency versions.
+Temporary output under `checkpoints/` and `reports/` remains ignored to prevent accidental publication of unrelated runs. The recorded CPU baseline instead publishes a deliberately curated evidence bundle under [`experiments/runs/deepcrack-cpu-baseline/`](experiments/runs/deepcrack-cpu-baseline/), its exact configuration, and a dashboard copied to `assets/experiments/`. The raw data and checkpoint weights remain excluded; their local provenance and SHA-256 fingerprints are recorded in the bundle.
 
 ### What to report
 

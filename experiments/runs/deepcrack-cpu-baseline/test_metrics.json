@@ -1,0 +1,44 @@
+{
+  "pixel_accuracy": 0.9821512085476002,
+  "mean_iou": 0.8235422255694498,
+  "mean_dice": 0.8949426276587209,
+  "foreground_iou": 0.665591,
+  "foreground_dice": 0.799225,
+  "foreground_precision": 0.778466,
+  "foreground_recall": 0.821121,
+  "per_class_iou": [
+    0.981494,
+    0.665591
+  ],
+  "per_class_dice": [
+    0.99066,
+    0.799225
+  ],
+  "support": [
+    3715012,
+    167996
+  ],
+  "confusion_matrix": [
+    [
+      3675756,
+      39256
+    ],
+    [
+      30051,
+      137945
+    ]
+  ],
+  "split": "official_test",
+  "checkpoint": ".\\checkpoints\\best.pt",
+  "protocol": "train/validation split derived only from official train; official test held out",
+  "split_counts": {
+    "train": 240,
+    "validation": 60,
+    "test": 237
+  },
+  "current_manifest_counts": {
+    "train": 240,
+    "validation": 60,
+    "test": 237
+  }
+}
