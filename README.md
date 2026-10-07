@@ -21,6 +21,26 @@ Key guarantees:
 - API inference refuses to produce random predictions when no valid checkpoint exists;
 - reports are generated from the current experiment artifacts rather than hard-coded numbers.
 
+
+## Visual overview
+
+![Current v2 protocol](assets/pipeline-protocol.svg)
+
+The diagram above represents the **current v2 split-integrity protocol**. It is an architecture/process visual, not a performance claim.
+
+<details>
+<summary><strong>Archived v1 visual gallery — qualitative context only</strong></summary>
+
+These are genuine visuals retained from the pre-v2 repository. They remain useful qualitative context, but their numerical results are **not** valid current v2 test results because v1 selected checkpoints using the official test set. See [`assets/legacy-v1/README.md`](assets/legacy-v1/README.md).
+
+![Archived v1 prediction snapshot](assets/legacy-v1/prediction_dashboard_real.png)
+
+![Archived v1 evaluation snapshot](assets/legacy-v1/evaluation_dashboard_real.png)
+
+</details>
+
+A current, reportable dashboard is generated after a recorded v2 run from the split manifest, checkpoint, training history, and held-out test evaluation.
+
 ## Data card
 
 | Item | Value |
