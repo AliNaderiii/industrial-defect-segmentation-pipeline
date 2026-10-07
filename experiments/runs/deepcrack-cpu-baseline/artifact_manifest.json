@@ -1,0 +1,33 @@
+{
+  "checkpoint_weights_published": false,
+  "code_commit_used_for_training": "4aa8a120ea4f59357c82bbf172068448a239a795",
+  "configuration": {
+    "path": "experiments/configs/deepcrack_cpu_baseline.yaml",
+    "sha256": "0adf46020df18dfaa62b0dd30e268ac40cb28b8c86b73e14186f2978808862c7"
+  },
+  "local_selected_checkpoint_not_published": {
+    "path_at_recording": "checkpoints/best.pt",
+    "selection_epoch": 14,
+    "selection_metric": "validation foreground IoU",
+    "selection_metric_value": 0.595122,
+    "sha256": "95171c0c4992888bd37b828ca3e40e0339e651780b5f5720d59272dc90cf05b6"
+  },
+  "official_test": {
+    "count": 237,
+    "evaluation_executions_recorded": 1,
+    "metrics_sha256": "79b71efeb660a5961fce43264c80345c99752779ce51b68b6e7d09b76a4c4418",
+    "split": "official_test"
+  },
+  "published_dashboard": {
+    "path": "assets/experiments/deepcrack_cpu_baseline_dashboard.png",
+    "sha256": "47800c24d849e7e986b869bdff3329516cb3dc011c34bd1316f845bce98decb7"
+  },
+  "raw_data_published": false,
+  "recorded_at_local": "2026-10-07",
+  "recorded_wall_clock_seconds": {
+    "official_test_evaluation": 22.6252587,
+    "training_command": 834.8659642
+  },
+  "run_slug": "deepcrack-cpu-baseline",
+  "schema_version": 1
+}
