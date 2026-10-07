@@ -1,31 +1,31 @@
-# Data - DeepCrack 537 images, download via script
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.venv/
+.pytest_cache/
+.ruff_cache/
+.coverage
+
+# Non-commercial DeepCrack data and source archives
 data/
 DeepCrack.zip
 *.tar
 *.zip
 
-# Python
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-*.so
-*.egg-info/
-.env
-.venv
-venv/
-.ipynb_checkpoints/
-.pytest_cache/
+# Locally generated model and experiment artifacts
+checkpoints/*.pt
+checkpoints/*.pth
+checkpoints/*.json
+!checkpoints/.gitkeep
+reports/*
+!reports/README.md
 
-# Models
-models/*.pth
-models/*.pkl
-# !models/best_unet.pth
-
-# OS
+# Editor / OS
 .DS_Store
 Thumbs.db
+.vscode/
+.idea/
 
-# Logs
-*.log
-wandb/
+# Distribution helper (kept in review ZIP; not source code)
+APPLY_CHANGES.ps1
